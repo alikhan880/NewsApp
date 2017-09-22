@@ -29,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
                 user = firebaseAuth.getCurrentUser();
                 if(user != null){
                     //User is in signed in state and we can go further
+                    //dsfkladjsf
+
+
+
+
+
                 }
                 else{
                     //User is in signed out state and we need to open
