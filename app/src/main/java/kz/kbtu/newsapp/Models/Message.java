@@ -5,14 +5,24 @@ package kz.kbtu.newsapp.Models;
  */
 
 public class Message {
+    private String id;
     private User user;
     private String message;
     private long timestamp;
 
-    public Message(User user, String message, long timestamp) {
+    public Message(String id, User user, String message, long timestamp) {
+        this.id = id;
         this.user = user;
         this.message = message;
         this.timestamp = timestamp;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public User getUser() {
