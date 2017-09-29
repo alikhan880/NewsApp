@@ -7,13 +7,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import kz.kbtu.newsapp.Models.Post;
 import kz.kbtu.newsapp.R;
 import kz.kbtu.newsapp.mvp.Presenter.MainPresenter;
 import kz.kbtu.newsapp.mvp.View.MainView;
@@ -53,8 +48,7 @@ public class AddPostActivity extends AppCompatActivity implements MainView {
         if(text.equals("")){
             Toast.makeText(this, "Nothing to post", Toast.LENGTH_SHORT).show();
         }
-        presenter.createPost(new Post(text, FirebaseAuth.getInstance().getCurrentUser().getUid()
-        , Calendar.getInstance().getTimeInMillis()));
+        presenter.createPost(text);
         finish();
     }
 

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Post post = dataSnapshot.getValue(Post.class);
                 messagesList.remove(post);
-
+                adapter.notifyDataSetChanged();
             }
 
             @Override
