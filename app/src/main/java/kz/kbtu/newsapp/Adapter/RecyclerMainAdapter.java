@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import kz.kbtu.newsapp.Models.Message;
+import kz.kbtu.newsapp.Models.Post;
 import kz.kbtu.newsapp.R;
 
 /**
@@ -16,9 +16,9 @@ import kz.kbtu.newsapp.R;
  */
 
 public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapter.ViewHolder> {
-    ArrayList<Message> list;
+    ArrayList<Post> list;
 
-    public RecyclerMainAdapter(ArrayList<Message> list) {
+    public RecyclerMainAdapter(ArrayList<Post> list) {
         this.list = list;
     }
 

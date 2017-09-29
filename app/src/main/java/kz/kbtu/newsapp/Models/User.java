@@ -7,12 +7,14 @@ package kz.kbtu.newsapp.Models;
 public class User {
     private String id;
     private String email;
-    private String password;
 
-    public User(String id, String email, String password) {
+    public User() {
+
+    }
+
+    public User(String id, String email) {
         this.id = id;
         this.email = email;
-        this.password = password;
     }
 
     public String getId() {
@@ -31,11 +33,4 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

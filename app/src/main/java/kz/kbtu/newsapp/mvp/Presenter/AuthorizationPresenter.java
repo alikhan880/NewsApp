@@ -6,7 +6,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import kz.kbtu.newsapp.Models.User;
 import kz.kbtu.newsapp.mvp.View.AuthorizationView;
 
 /**
@@ -53,6 +57,7 @@ public class AuthorizationPresenter {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            createUser();
                             view.proceed();
                         }
                         else{
@@ -60,5 +65,12 @@ public class AuthorizationPresenter {
                         }
                     }
                 });
+    }
+
+    private void createUser(){
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        User temp = new User(user.getUid().toString(), user.getEmail().toString());
+        db.child("users").child(temp.getId()).setValue(temp);
     }
 }
