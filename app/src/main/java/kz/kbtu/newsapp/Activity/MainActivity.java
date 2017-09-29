@@ -24,7 +24,7 @@ import kz.kbtu.newsapp.Adapter.RecyclerMainAdapter;
 import kz.kbtu.newsapp.Models.Post;
 import kz.kbtu.newsapp.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerMainAdapter.RecyclerMainListener{
     ArrayList<Post> messagesList;
     @BindView(R.id.recycler_view_main)
     RecyclerView recyclerViewMain;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         messagesList = new ArrayList<>();
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecyclerMainAdapter(messagesList);
+        adapter = new RecyclerMainAdapter(messagesList, this);
         recyclerViewMain.setAdapter(adapter);
         setListener();
     }
@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Post post = dataSnapshot.getValue(Post.class);
+                messagesList.remove(post);
 
             }
 
@@ -93,5 +95,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             default:return false;
         }
+    }
+
+    @Override
+    public void itemClicked(int position) {
+        Post post = messagesList.get(position);
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("post", post);
+        startActivity(intent);
     }
 }

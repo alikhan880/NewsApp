@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.AuthorizationActivity" />
-        <activity android:name=".Activity.AddPostActivity"></activity>
+        <activity android:name=".Activity.AddPostActivity" />
+        <activity android:name=".Activity.DetailActivity"></activity>
     </application>
 
 </manifest>

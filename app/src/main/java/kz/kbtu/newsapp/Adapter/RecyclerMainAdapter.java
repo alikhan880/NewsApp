@@ -17,9 +17,14 @@ import kz.kbtu.newsapp.R;
 
 public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapter.ViewHolder> {
     ArrayList<Post> list;
-
-    public RecyclerMainAdapter(ArrayList<Post> list) {
+    private RecyclerMainListener listener;
+    public RecyclerMainAdapter(ArrayList<Post> list, RecyclerMainListener listener) {
         this.list = list;
+        this.listener = listener;
+    }
+
+    public interface RecyclerMainListener{
+        void itemClicked(int position);
     }
 
     @Override
@@ -46,7 +51,7 @@ public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    listener.itemClicked(getAdapterPosition());
                 }
             });
         }
