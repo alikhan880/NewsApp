@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,13 +23,17 @@ import butterknife.ButterKnife;
 import kz.kbtu.newsapp.Adapter.RecyclerMainAdapter;
 import kz.kbtu.newsapp.Models.Post;
 import kz.kbtu.newsapp.R;
+import kz.kbtu.newsapp.mvp.Presenter.MainPresenter;
+import kz.kbtu.newsapp.mvp.View.MainView;
 
-public class MainActivity extends AppCompatActivity implements RecyclerMainAdapter.RecyclerMainListener{
+public class MainActivity extends AppCompatActivity implements RecyclerMainAdapter.RecyclerMainListener, MainView{
     ArrayList<Post> messagesList;
+    ArrayList<Post> favorites;
     @BindView(R.id.recycler_view_main)
     RecyclerView recyclerViewMain;
     RecyclerMainAdapter adapter;
     private DatabaseReference db;
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +41,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         messagesList = new ArrayList<>();
+        favorites = new ArrayList<>();
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecyclerMainAdapter(messagesList, this);
+        adapter = new RecyclerMainAdapter(messagesList, this, favorites);
         recyclerViewMain.setAdapter(adapter);
+        presenter = new MainPresenter(this);
         setListener();
     }
 
@@ -48,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
         ChildEventListener valueEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Toast.makeText(MainActivity.this, "added", Toast.LENGTH_SHORT).show();
                 Post post = dataSnapshot.getValue(Post.class);
                 Log.d("text", post.getMessage() + "");
                 messagesList.add(post);
@@ -77,7 +82,39 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
 
             }
         };
+        ChildEventListener favsListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Post post = dataSnapshot.getValue(Post.class);
+                favorites.add(post);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Post post = dataSnapshot.getValue(Post.class);
+                favorites.remove(post);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
         db.child("posts").addChildEventListener(valueEventListener);
+        db.child("favorites").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addChildEventListener(favsListener);
     }
 
 
@@ -103,5 +140,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("post", post);
         startActivity(intent);
+    }
+
+    @Override
+    public void likeClicked(int position) {
+        presenter.addOrDeleteFavorite(messagesList.get(position));
+    }
+
+    @Override
+    public void notifyAdapter() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError() {
+
     }
 }

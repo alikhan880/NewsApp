@@ -1,6 +1,7 @@
 package kz.kbtu.newsapp.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import kz.kbtu.newsapp.Activity.MainActivity;
 import kz.kbtu.newsapp.R;
 import kz.kbtu.newsapp.mvp.Presenter.AuthorizationPresenter;
 import kz.kbtu.newsapp.mvp.View.AuthorizationView;
@@ -67,7 +69,8 @@ public class RegistrationFragment extends Fragment implements AuthorizationView 
 
     @Override
     public void proceed() {
-
+        getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+        getActivity().finish();
     }
 
     @Override
