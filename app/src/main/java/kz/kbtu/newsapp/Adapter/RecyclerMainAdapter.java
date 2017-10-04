@@ -47,6 +47,7 @@ public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapte
         else{
             holder.btnLike.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_heart_without_color, 0);
         }
+        holder.btnLike.setText(String.valueOf(list.get(position).getCnt()));
     }
 
     @Override

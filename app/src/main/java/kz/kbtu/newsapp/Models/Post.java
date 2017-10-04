@@ -3,31 +3,39 @@ package kz.kbtu.newsapp.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by abakh on 29-Sep-17.
  */
-
 public class Post implements Parcelable {
     private String id;
     private String message;
     private String userId;
     private long timestamp;
+    private int cnt;
 
     public Post() {
     }
 
-    public Post(String id, String message, String userId, long timestamp) {
+    public Post(String id, String message, String userId, long timestamp, int cnt) {
         this.id = id;
         this.message = message;
         this.userId = userId;
         this.timestamp = timestamp;
+        this.cnt = cnt;
     }
+
 
     protected Post(Parcel in) {
         id = in.readString();
         message = in.readString();
         userId = in.readString();
         timestamp = in.readLong();
+        cnt = in.readInt();
     }
 
     public static final Creator<Post> CREATOR = new Creator<Post>() {
@@ -74,6 +82,20 @@ public class Post implements Parcelable {
         this.timestamp = timestamp;
     }
 
+    public int getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(int cnt) {
+        this.cnt = cnt;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null || this.getClass() != obj.getClass()) return false;
+        if(this == obj) return true;
+        return this.getId().equals(((Post)obj).getId());
+    }
 
     @Override
     public int describeContents() {
@@ -86,12 +108,17 @@ public class Post implements Parcelable {
         dest.writeString(message);
         dest.writeString(userId);
         dest.writeLong(timestamp);
+        dest.writeInt(cnt);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == null || this.getClass() != obj.getClass()) return false;
-        if(this == obj) return true;
-        return this.getId().equals(((Post)obj).getId());
+    @Exclude
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("message", message);
+        result.put("userId", userId);
+        result.put("timestamp", timestamp);
+        result.put("cnt", cnt);
+        return result;
     }
 }

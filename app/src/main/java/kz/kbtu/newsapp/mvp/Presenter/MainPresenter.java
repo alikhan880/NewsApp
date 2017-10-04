@@ -31,7 +31,7 @@ public class MainPresenter {
         db.child("posts").child(key).setValue(new Post(key,
                 text,
                 FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                Calendar.getInstance().getTimeInMillis()));
+                Calendar.getInstance().getTimeInMillis(), 0));
     }
 
     public void addOrDeleteFavorite(final Post p){
@@ -42,9 +42,11 @@ public class MainPresenter {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child(p.getId()).exists()){
                     dataSnapshot.getRef().child(p.getId()).setValue(null);
+                    decreaseCntOfPost(p);
                 }
                 else{
                     dataSnapshot.getRef().child(p.getId()).setValue(p);
+                    increaseCntOfPost(p);
                 }
             }
 
@@ -53,6 +55,23 @@ public class MainPresenter {
                 Log.d("tag", "error");
             }
         });
+    }
+
+    private void decreaseCntOfPost(Post p){
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        if(p.getCnt() > 0){
+            p.setCnt(p.getCnt() - 1);
+        }
+        else{
+            p.setCnt(0);
+        }
+        db.child("posts").child(p.getId()).updateChildren(p.toMap());
+    }
+
+    private void increaseCntOfPost(Post p){
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        p.setCnt(p.getCnt() + 1);
+        db.child("posts").child(p.getId()).updateChildren(p.toMap());
     }
 
 
