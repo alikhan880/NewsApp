@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".Activity.AuthorizationActivity" />
         <activity android:name=".Activity.AddPostActivity" />
-        <activity android:name=".Activity.DetailActivity"></activity>
+        <activity android:name=".Activity.DetailActivity" />
+        <activity android:name=".Activity.CommentActivity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package kz.kbtu.newsapp.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -33,6 +34,8 @@ public class DetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_show_comments)
     public void onViewClicked() {
-
+        Intent intent = new Intent(this, CommentActivity.class);
+        intent.putExtra("post", post);
+        startActivity(intent);
     }
 }

@@ -43,6 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="Показать комментарии"
+        android:text="Show comments"
         android:textSize="12sp"/>
 </RelativeLayout>
