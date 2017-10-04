@@ -62,8 +62,8 @@ public class LoginFragment extends Fragment implements AuthorizationView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_enter_login:
-                String email = etEmailLogin.getText().toString();
-                String password = etPasswordLogin.getText().toString();
+                String email = etEmailLogin.getText().toString().trim();
+                String password = etPasswordLogin.getText().toString().trim();
                 presenter.login(email, password);
                 break;
             case R.id.btn_register_login:
