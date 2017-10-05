@@ -6,7 +6,13 @@
     android:layout_height="match_parent"
     tools:context="kz.kbtu.newsapp.Activity.CommentActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/toolbar"
         android:id="@+id/recycler_view_comments"
         android:layout_above="@+id/ll"
         android:layout_width="match_parent"
