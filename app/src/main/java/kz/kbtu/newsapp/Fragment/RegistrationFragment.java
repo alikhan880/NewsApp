@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -36,6 +37,8 @@ public class RegistrationFragment extends Fragment implements AuthorizationView 
     Button btnBackRegistration;
     Unbinder unbinder;
     AuthorizationPresenter presenter;
+    @BindView(R.id.progress_dialog)
+    ProgressBar progressDialog;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -54,12 +57,12 @@ public class RegistrationFragment extends Fragment implements AuthorizationView 
 
     @Override
     public void showLoading() {
-
+        progressDialog.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        progressDialog.setVisibility(View.GONE);
     }
 
     @Override

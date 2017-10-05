@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -26,12 +29,14 @@ import kz.kbtu.newsapp.R;
 import kz.kbtu.newsapp.mvp.Presenter.MainPresenter;
 import kz.kbtu.newsapp.mvp.View.MainView;
 
-public class MainActivity extends AppCompatActivity implements RecyclerMainAdapter.RecyclerMainListener, MainView{
+public class MainActivity extends AppCompatActivity implements RecyclerMainAdapter.RecyclerMainListener, MainView {
     ArrayList<Post> messagesList;
     ArrayList<Post> favorites;
     @BindView(R.id.recycler_view_main)
     RecyclerView recyclerViewMain;
     RecyclerMainAdapter adapter;
+    @BindView(R.id.progress_dialog)
+    ProgressBar progressDialog;
     private DatabaseReference db;
     private MainPresenter presenter;
 
@@ -40,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         messagesList = new ArrayList<>();
         favorites = new ArrayList<>();
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(this));
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
     }
 
     private void setListener() {
+        showLoading();
         db = FirebaseDatabase.getInstance().getReference();
         ChildEventListener valueEventListener = new ChildEventListener() {
             @Override
@@ -58,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
                 Log.d("text", post.getMessage() + "");
                 messagesList.add(post);
                 adapter.notifyDataSetChanged();
+                hideLoading();
             }
 
             @Override
@@ -126,11 +136,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_add_post:
                 startActivity(new Intent(this, AddPostActivity.class));
                 return true;
-            default:return false;
+            default:
+                return false;
         }
     }
 
@@ -154,12 +165,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
 
     @Override
     public void showLoading() {
-
+        progressDialog.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        progressDialog.setVisibility(View.GONE);
     }
 
     @Override

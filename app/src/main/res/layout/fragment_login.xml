@@ -66,5 +66,11 @@
         android:text="Register"
         android:textColor="@color/colorAccent" />
 
+    <ProgressBar
+        android:id="@+id/progress_dialog"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,13 +38,14 @@ public class CommentActivity extends AppCompatActivity implements MainView {
     EditText etTextComments;
     @BindView(R.id.btn_send_comment)
     Button btnSendComment;
+    @BindView(R.id.progress_dialog)
+    ProgressBar progressDialog;
     private Post post;
     private CommentsPresenter presenter;
     private FirebaseDatabase db;
     private ChildEventListener listener;
     private ArrayList<Comment> commentsList;
     private RecyclerCommentsAdapter adapter;
-
 
 
     @Override
@@ -64,12 +67,9 @@ public class CommentActivity extends AppCompatActivity implements MainView {
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewComments.setAdapter(adapter);
         addListener();
-        getComments();
     }
 
-    private void getComments() {
 
-    }
 
     @Override
     protected void onPause() {
@@ -84,7 +84,6 @@ public class CommentActivity extends AppCompatActivity implements MainView {
                 Comment comment = dataSnapshot.getValue(Comment.class);
                 commentsList.add(comment);
                 adapter.notifyDataSetChanged();
-                recyclerViewComments.scrollToPosition(commentsList.size());
             }
 
             @Override
@@ -97,7 +96,6 @@ public class CommentActivity extends AppCompatActivity implements MainView {
                 Comment comment = dataSnapshot.getValue(Comment.class);
                 commentsList.remove(comment);
                 adapter.notifyDataSetChanged();
-                recyclerViewComments.scrollToPosition(commentsList.size());
             }
 
             @Override
@@ -114,9 +112,9 @@ public class CommentActivity extends AppCompatActivity implements MainView {
 
     @OnClick(R.id.btn_send_comment)
     public void onViewClicked() {
-        String message = etTextComments.getText().toString();
+        String message = etTextComments.getText().toString().trim();
         if (message.equals("")) {
-            Toast.makeText(this, "Comment need to be non-empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Comment has to be non-empty", Toast.LENGTH_SHORT).show();
             return;
         }
         User curUser = new User(FirebaseAuth.getInstance().getCurrentUser().getUid(), FirebaseAuth.getInstance().getCurrentUser().getEmail());
@@ -131,12 +129,12 @@ public class CommentActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void showLoading() {
-
+        progressDialog.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        progressDialog.setVisibility(View.GONE);
     }
 
     @Override

@@ -44,9 +44,11 @@ public class AddPostActivity extends AppCompatActivity implements MainView {
     }
 
     private void createPost() {
-        String text = etAddPost.getText().toString();
+        String text = etAddPost.getText().toString().trim();
         if(text.equals("")){
-            Toast.makeText(this, "Nothing to post", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Post has to be non-empty", Toast.LENGTH_SHORT).show();
+            etAddPost.setText("");
+            return;
         }
         presenter.createPost(text);
         finish();

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -36,6 +37,8 @@ public class LoginFragment extends Fragment implements AuthorizationView {
     Button btnRegisterLogin;
     Unbinder unbinder;
     AuthorizationPresenter presenter;
+    @BindView(R.id.progress_dialog)
+    ProgressBar progressDialog;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -72,7 +75,7 @@ public class LoginFragment extends Fragment implements AuthorizationView {
         }
     }
 
-    private void registerClicked(){
+    private void registerClicked() {
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -82,12 +85,12 @@ public class LoginFragment extends Fragment implements AuthorizationView {
 
     @Override
     public void showLoading() {
-
+        progressDialog.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        progressDialog.setVisibility(View.GONE);
     }
 
     @Override

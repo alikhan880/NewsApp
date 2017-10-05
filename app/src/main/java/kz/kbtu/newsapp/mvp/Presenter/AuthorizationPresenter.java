@@ -27,7 +27,9 @@ public class AuthorizationPresenter {
     }
 
     public void login(String email, String password){
+        view.showLoading();
         if(email.equals("") || password.equals("")){
+            view.hideLoading();
             view.showError("Please, fill in all fields");
             return;
         }
@@ -42,6 +44,7 @@ public class AuthorizationPresenter {
                 else{
                     view.showError(task.getException().getMessage());
                 }
+                view.hideLoading();
             }
         });
     }
@@ -63,6 +66,7 @@ public class AuthorizationPresenter {
                         else{
                             view.showError(task.getException().getMessage());
                         }
+                        view.hideLoading();
                     }
                 });
     }
