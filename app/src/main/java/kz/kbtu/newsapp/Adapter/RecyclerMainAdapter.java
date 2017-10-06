@@ -41,6 +41,7 @@ public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.message.setText(list.get(position).getMessage());
+        holder.title.setText(list.get(position).getTitle());
         if(favorite.contains(list.get(position))){
             holder.btnLike.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_heart, 0);
         }
@@ -56,10 +57,12 @@ public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView title;
         TextView message;
         Button btnLike;
         public ViewHolder(View itemView) {
             super(itemView);
+            title = (TextView)itemView.findViewById(R.id.item_title_recycler_main);
             message = (TextView) itemView.findViewById(R.id.item_text_recycler_main);
             btnLike = (Button)itemView.findViewById(R.id.item_btn_like);
             itemView.setOnClickListener(new View.OnClickListener() {
