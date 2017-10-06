@@ -25,10 +25,10 @@ public class MainPresenter {
         this.view = view;
     }
 
-    public void createPost(String text){
+    public void createPost(String title, String text){
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         String key = db.child("posts").push().getKey();
-        db.child("posts").child(key).setValue(new Post(key,
+        db.child("posts").child(key).setValue(new Post(key, title,
                 text,
                 FirebaseAuth.getInstance().getCurrentUser().getUid(),
                 Calendar.getInstance().getTimeInMillis(), 0));

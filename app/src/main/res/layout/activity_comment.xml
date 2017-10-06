@@ -11,9 +11,22 @@
         layout="@layout/toolbar" />
 
 
+    <TextView
+        android:id="@+id/tv_comments_comment"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="Comments"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/toolbar"
+        android:layout_below="@+id/tv_comments_comment"
         android:id="@+id/recycler_view_comments"
+        android:layout_margin="10dp"
         android:layout_above="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -30,6 +43,7 @@
         android:id="@+id/ll"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

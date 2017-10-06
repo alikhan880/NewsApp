@@ -17,6 +17,8 @@ import kz.kbtu.newsapp.mvp.View.MainView;
 public class AddPostActivity extends AppCompatActivity implements MainView {
     @BindView(R.id.et_add_post)
     EditText etAddPost;
+    @BindView(R.id.et_title_add_post)
+    EditText etTitleAddPost;
     private MainPresenter presenter;
 
     @Override
@@ -26,6 +28,8 @@ public class AddPostActivity extends AppCompatActivity implements MainView {
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         presenter = new MainPresenter(this);
     }
 
@@ -41,6 +45,9 @@ public class AddPostActivity extends AppCompatActivity implements MainView {
             case R.id.menu_send:
                 createPost();
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 return false;
         }
@@ -48,12 +55,13 @@ public class AddPostActivity extends AppCompatActivity implements MainView {
 
     private void createPost() {
         String text = etAddPost.getText().toString().trim();
-        if(text.equals("")){
-            Toast.makeText(this, "Post has to be non-empty", Toast.LENGTH_SHORT).show();
+        String title = etTitleAddPost.getText().toString().trim();
+        if (text.equals("") || title.equals("")) {
+            Toast.makeText(this, "Post or title has to be non-empty", Toast.LENGTH_SHORT).show();
             etAddPost.setText("");
             return;
         }
-        presenter.createPost(text);
+        presenter.createPost(title,text);
         finish();
     }
 

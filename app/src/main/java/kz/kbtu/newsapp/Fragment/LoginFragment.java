@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -33,12 +34,12 @@ public class LoginFragment extends Fragment implements AuthorizationView {
     TextInputEditText etPasswordLogin;
     @BindView(R.id.btn_enter_login)
     Button btnEnterLogin;
-    @BindView(R.id.btn_register_login)
-    Button btnRegisterLogin;
     Unbinder unbinder;
     AuthorizationPresenter presenter;
     @BindView(R.id.progress_dialog)
     ProgressBar progressDialog;
+    @BindView(R.id.tv_register_login)
+    TextView tvRegisterLogin;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -61,7 +62,7 @@ public class LoginFragment extends Fragment implements AuthorizationView {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.btn_enter_login, R.id.btn_register_login})
+    @OnClick({R.id.btn_enter_login, R.id.tv_register_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_enter_login:
@@ -69,7 +70,7 @@ public class LoginFragment extends Fragment implements AuthorizationView {
                 String password = etPasswordLogin.getText().toString().trim();
                 presenter.login(email, password);
                 break;
-            case R.id.btn_register_login:
+            case R.id.tv_register_login:
                 registerClicked();
                 break;
         }
@@ -103,4 +104,5 @@ public class LoginFragment extends Fragment implements AuthorizationView {
         getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
         getActivity().finish();
     }
+
 }

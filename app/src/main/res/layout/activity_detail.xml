@@ -20,7 +20,27 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.CardView
-                android:id="@+id/cv_detail"
+                android:id="@+id/cv_title_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/tv_title_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Title"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="normal"/>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_content_detail"
+                android:layout_below="@+id/cv_title_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
@@ -31,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="Text"
-                    android:textColor="#000000"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="normal" />
 

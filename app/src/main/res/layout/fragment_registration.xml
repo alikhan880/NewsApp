@@ -5,7 +5,29 @@
     tools:context="kz.kbtu.newsapp.Fragment.LoginFragment">
 
     <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find interesting events anywhere"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll"
+        android:layout_below="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -51,7 +73,9 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:text="Sign up"
-        android:textColor="@color/colorAccent" />
+        android:background="#f56666"
+        android:gravity="center"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/btn_back_registration"
@@ -64,7 +88,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:text="Go back"
-        android:textColor="@color/colorAccent" />
+        android:background="#f56666"
+        android:gravity="center"
+        android:textColor="#FFFFFF"/>
 
     <ProgressBar
         android:id="@+id/progress_dialog"

@@ -140,10 +140,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
             case R.id.menu_add_post:
                 startActivity(new Intent(this, AddPostActivity.class));
                 return true;
+            case R.id.menu_logout:
+                logout();
+                return true;
             default:
                 return false;
         }
     }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this, StartActivity.class));
+        finish();
+    }
+
 
     @Override
     public void itemClicked(int position) {
