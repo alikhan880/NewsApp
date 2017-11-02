@@ -25,7 +25,7 @@ public class StartActivity extends AppCompatActivity{
                     finish();
                 }
                 else{
-                    startActivity(new Intent(StartActivity.this, MainActivity.class));
+                    startActivity(new Intent(StartActivity.this, BottomNavigationActivity.class));
                     finish();
                 }
             }

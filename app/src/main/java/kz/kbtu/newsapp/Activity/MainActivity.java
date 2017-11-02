@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +68,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerMainAdapt
                 Post post = dataSnapshot.getValue(Post.class);
                 Log.d("text", post.getMessage() + "");
                 messagesList.add(post);
+                Collections.sort(messagesList, new Comparator<Post>() {
+                    @Override
+                    public int compare(Post o1, Post o2) {
+                        if(o1.getTimestamp() > o2.getTimestamp()) return -1;
+                        else if(o1.getTimestamp() == o2.getTimestamp()) return 0;
+                        else return 1;
+                    }
+                });
                 adapter.notifyDataSetChanged();
                 hideLoading();
             }

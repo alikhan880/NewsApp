@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_catalog"
+        android:title="Events"
+        android:icon="@drawable/ic_catalog"
+        android:enabled="true"
+        />
+
+    <item
+        android:id="@+id/menu_search"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        android:enabled="true"
+        />
+
+    <item
+        android:id="@+id/menu_add"
+        android:title="Add event"
+        android:icon="@drawable/ic_add"
+        android:enabled="true"
+        />
+
+    <item
+        android:id="@+id/menu_favorites"
+        android:title="Favorites"
+        android:icon="@drawable/ic_star"
+        android:enabled="true"
+        />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:title="Профиль"
+        android:icon="@drawable/ic_account"
+        android:enabled="true"
+        />
+</menu>
