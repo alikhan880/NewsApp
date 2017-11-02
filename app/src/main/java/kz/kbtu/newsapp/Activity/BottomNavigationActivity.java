@@ -1,10 +1,13 @@
 package kz.kbtu.newsapp.Activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -36,6 +39,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initContainers();
         addListener();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void initContainers() {
@@ -90,4 +96,20 @@ public class BottomNavigationActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onBackPressed() {
+        fm = getSupportFragmentManager();
+        for (Fragment frag : fm.getFragments()) {
+            if (frag.isVisible()) {
+                FragmentManager childFm = frag.getChildFragmentManager();
+                if (childFm.getBackStackEntryCount() > 0) {
+                    childFm.popBackStack();
+                    return;
+                } else {
+                    super.onBackPressed();
+                }
+            }
+        }
+    }
 }
