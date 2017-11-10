@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import kz.kbtu.newsapp.Activity.MainActivity;
+import kz.kbtu.newsapp.Activity.BottomNavigationActivity;
 import kz.kbtu.newsapp.R;
 import kz.kbtu.newsapp.mvp.Presenter.AuthorizationPresenter;
 import kz.kbtu.newsapp.mvp.View.AuthorizationView;
@@ -72,7 +72,7 @@ public class RegistrationFragment extends Fragment implements AuthorizationView 
 
     @Override
     public void proceed() {
-        getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+        getActivity().startActivity(new Intent(getActivity(), BottomNavigationActivity.class));
         getActivity().finish();
     }
 

@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,18 +46,23 @@ public class BottomNavigationActivity extends AppCompatActivity {
     private void initContainers() {
         catalogContainer = (CatalogContainer) fm.findFragmentByTag("Catalog");
         if(catalogContainer == null) catalogContainer = new CatalogContainer();
+        fm.beginTransaction().add(R.id.main_container, catalogContainer).hide(catalogContainer).commit();
 
         searchContainer = (SearchContainer) fm.findFragmentByTag("Search");
         if(searchContainer == null) searchContainer = new SearchContainer();
+        fm.beginTransaction().add(R.id.main_container, searchContainer).hide(searchContainer).commit();
 
         addEventContainer = (AddEventContainer)fm.findFragmentByTag("Event");
         if(addEventContainer == null) addEventContainer = new AddEventContainer();
+        fm.beginTransaction().add(R.id.main_container, addEventContainer).hide(addEventContainer).commit();
 
         favoritesContainer = (FavoritesContainer)fm.findFragmentByTag("Favorites");
         if(favoritesContainer == null) favoritesContainer = new FavoritesContainer();
+        fm.beginTransaction().add(R.id.main_container, favoritesContainer).hide(favoritesContainer).commit();
 
         profileContainer = (ProfileContainer)fm.findFragmentByTag("Profile");
         if(profileContainer == null) profileContainer = new ProfileContainer();
+        fm.beginTransaction().add(R.id.main_container, profileContainer).hide(profileContainer).commit();
 
     }
 
@@ -68,24 +72,49 @@ public class BottomNavigationActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.menu_catalog:
-                        fm.beginTransaction().replace(R.id.main_container, catalogContainer, null).commit();
-                        Toast.makeText(BottomNavigationActivity.this, "Catalog", Toast.LENGTH_SHORT).show();
+                        fm.beginTransaction()
+                                .hide(searchContainer)
+                                .hide(addEventContainer)
+                                .hide(favoritesContainer)
+                                .hide(profileContainer)
+                                .show(catalogContainer)
+                                .commit();
                         return true;
                     case R.id.menu_search:
-                        fm.beginTransaction().replace(R.id.main_container, searchContainer, null).commit();
-                        Toast.makeText(BottomNavigationActivity.this, "Search", Toast.LENGTH_SHORT).show();
+                        fm.beginTransaction()
+                                .hide(catalogContainer)
+                                .hide(addEventContainer)
+                                .hide(favoritesContainer)
+                                .hide(profileContainer)
+                                .show(searchContainer)
+                                .commit();
                         return true;
                     case R.id.menu_add:
-                        fm.beginTransaction().replace(R.id.main_container, addEventContainer, null).commit();
-                        Toast.makeText(BottomNavigationActivity.this, "Add event", Toast.LENGTH_SHORT).show();
+                        fm.beginTransaction()
+                                .hide(searchContainer)
+                                .hide(catalogContainer)
+                                .hide(favoritesContainer)
+                                .hide(profileContainer)
+                                .show(addEventContainer)
+                                .commit();
                         return true;
                     case R.id.menu_favorites:
-                        fm.beginTransaction().replace(R.id.main_container, favoritesContainer, null).commit();
-                        Toast.makeText(BottomNavigationActivity.this, "Favorites", Toast.LENGTH_SHORT).show();
+                        fm.beginTransaction()
+                                .hide(searchContainer)
+                                .hide(addEventContainer)
+                                .hide(catalogContainer)
+                                .hide(profileContainer)
+                                .show(favoritesContainer)
+                                .commit();
                         return true;
                     case R.id.menu_profile:
-                        fm.beginTransaction().replace(R.id.main_container, profileContainer, null).commit();
-                        Toast.makeText(BottomNavigationActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        fm.beginTransaction()
+                                .hide(searchContainer)
+                                .hide(addEventContainer)
+                                .hide(favoritesContainer)
+                                .hide(catalogContainer)
+                                .show(profileContainer)
+                                .commit();
                         return true;
                     default:
                         return false;
