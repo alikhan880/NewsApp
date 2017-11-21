@@ -31,7 +31,7 @@ public class MainPresenter {
         db.child("posts").child(key).setValue(new Post(key, title,
                 text,
                 FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                Calendar.getInstance().getTimeInMillis(), 0));
+                Calendar.getInstance().getTimeInMillis(), 0, 0));
     }
 
     public void addOrDeleteFavorite(final Post p){

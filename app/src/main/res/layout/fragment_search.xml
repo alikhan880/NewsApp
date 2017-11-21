@@ -1,12 +1,48 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="kz.kbtu.newsapp.Fragment.SearchFragment">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Search Fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:hint="Type here"
+            android:layout_height="wrap_content" />
+
+
+        <Button
+            android:id="@+id/btn_search"
+            android:text="Search"
+            android:layout_weight="2"
+            android:textAllCaps="false"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/recycler_view_search"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/ll"
+        android:layout_height="match_parent"/>
+
+
+
+</RelativeLayout>

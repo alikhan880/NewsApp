@@ -18,17 +18,19 @@ public class Post implements Parcelable {
     private String userId;
     private long timestamp;
     private int cnt;
+    private int distance;
 
     public Post() {
     }
 
-    public Post(String id, String title, String message, String userId, long timestamp, int cnt) {
+    public Post(String id, String title, String message, String userId, long timestamp, int cnt, int distance) {
         this.id = id;
         this.title = title;
         this.message = message;
         this.userId = userId;
         this.timestamp = timestamp;
         this.cnt = cnt;
+        this.distance = distance;
     }
 
     public String getId() {
@@ -79,6 +81,14 @@ public class Post implements Parcelable {
         this.cnt = cnt;
     }
 
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
     protected Post(Parcel in) {
         id = in.readString();
         title = in.readString();
@@ -86,6 +96,7 @@ public class Post implements Parcelable {
         userId = in.readString();
         timestamp = in.readLong();
         cnt = in.readInt();
+        distance = in.readInt();
     }
 
     public static final Creator<Post> CREATOR = new Creator<Post>() {
@@ -118,6 +129,7 @@ public class Post implements Parcelable {
         result.put("userId", userId);
         result.put("timestamp", timestamp);
         result.put("cnt", cnt);
+        result.put("distance", distance);
         return result;
     }
 
@@ -134,5 +146,19 @@ public class Post implements Parcelable {
         dest.writeString(userId);
         dest.writeLong(timestamp);
         dest.writeInt(cnt);
+        dest.writeInt(distance);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", userId='" + userId + '\'' +
+                ", timestamp=" + timestamp +
+                ", cnt=" + cnt +
+                ", distance=" + distance +
+                '}';
     }
 }
