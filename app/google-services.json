@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "165281268864-qvaf604fcop52uhm4bi4r0bic31e7o2o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.kbtu.newsapp",
+            "certificate_hash": "8b4a48fd110f440b7d4c58a2f86beb8183913418"
+          }
+        },
+        {
+          "client_id": "165281268864-49e142uu8nrdamre98btpjieehlc39bj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.kbtu.newsapp",
+            "certificate_hash": "5f91d559af4e37296d67ec950f7e38dcc65d2f38"
+          }
+        },
+        {
           "client_id": "165281268864-i5m38m085cvr81uq20pstde8ttifafmd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -30,6 +46,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyAOdmeTbcTw7nUjwlkResa9Lj378ZRI2-k"
+        },
+        {
+          "current_key": "AIzaSyBAJN4GlZzT9qeapR8SnSAaVI6YjLuC09o"
         }
       ],
       "services": {
@@ -39,6 +58,13 @@
         "appinvite_service": {
           "status": 2,
           "other_platform_oauth_client": [
+            {
+              "client_id": "165281268864-jqhr2t7cu482g3njk7gug5p6lbfp51dm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "BurumbayS.Poseti"
+              }
+            },
             {
               "client_id": "165281268864-q0kv1kpno4lj399guh9dc5qn5hubfs2t.apps.googleusercontent.com",
               "client_type": 3

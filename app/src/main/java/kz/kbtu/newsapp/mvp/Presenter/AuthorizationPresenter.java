@@ -74,7 +74,7 @@ public class AuthorizationPresenter {
     private void createUser(){
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        User temp = new User(user.getUid().toString(), user.getEmail().toString());
+        User temp = new User(user.getUid().toString(), user.getEmail().toString(), null);
         db.child("users").child(temp.getId()).setValue(temp);
     }
 }
