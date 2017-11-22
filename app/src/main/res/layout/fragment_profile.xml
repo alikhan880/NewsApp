@@ -21,7 +21,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="20dp"
-                android:src="@drawable/logo" />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,7 +36,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:fontFamily="sans-serif"
-                    android:text="New User"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
 
@@ -57,8 +56,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text="Almaty, Kazakhstan" />
+                        android:layout_marginStart="10dp" />
 
 
                 </LinearLayout>
@@ -81,8 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text="abakhitbek@gmail.com" />
+                        android:layout_marginStart="10dp" />
 
 
                 </LinearLayout>
@@ -93,6 +90,71 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:background="#636363"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_profile_settings"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:text="Profile Settings"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:textAllCaps="false"
+                    android:fontFamily="monospace"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content" />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:background="#636363"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_sign_out"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:text="Sign out"
+                    android:gravity="center"
+                    android:textColor="#c76020"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:textAllCaps="false"
+                    android:fontFamily="monospace"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content" />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -2,26 +2,20 @@ package kz.kbtu.newsapp.Fragment;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -29,10 +23,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import kz.kbtu.newsapp.Activity.AuthorizationActivity;
 import kz.kbtu.newsapp.Models.User;
 import kz.kbtu.newsapp.R;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +35,16 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.iv_profile)
     CircleImageView ivProfile;
     Unbinder unbinder;
+    @BindView(R.id.tv_name_profile)
+    TextView tvNameProfile;
+    @BindView(R.id.tv_location_profile)
+    TextView tvLocationProfile;
+    @BindView(R.id.tv_email_profile)
+    TextView tvEmailProfile;
+    @BindView(R.id.btn_profile_settings)
+    Button btnProfileSettings;
+    @BindView(R.id.btn_sign_out)
+    Button btnSignOut;
     private View rootView;
 
 
@@ -64,8 +67,30 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
-                        Picasso.with(getContext()).load(user.getPhotoUrl())
-                                .fit().centerCrop().into(ivProfile);
+                        if(user.getPhotoUrl() != null && !user.getPhotoUrl().equals("")){
+                            Picasso.with(getContext()).load(user.getPhotoUrl())
+                                    .fit().centerCrop().into(ivProfile);
+                        }
+                        else{
+                            ivProfile.setImageResource(R.drawable.logo);
+                        }
+
+                        if(user.getName() != null && !user.getName().equals("")){
+                            tvNameProfile.setText(user.getName());
+                        }
+                        else{
+                            tvNameProfile.setText("Set your name in settings");
+                        }
+                        if(user.getAddress() != null && !user.getAddress().equals("")){
+                            tvLocationProfile.setText(user.getAddress());
+                        }
+                        else{
+                            tvLocationProfile.setText("Set location in settings");
+                        }
+
+                        tvEmailProfile.setText(user.getEmail());
+
+
                     }
 
                     @Override
@@ -83,37 +108,19 @@ public class ProfileFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.iv_profile)
-    public void onViewClicked() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, 101);
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 101 && resultCode == RESULT_OK){
-            final Uri uri = data.getData();
-            StorageReference ref = FirebaseStorage.getInstance()
-                    .getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            ref.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getContext(), "Upload success", Toast.LENGTH_SHORT).show();
-                    Log.d("image", taskSnapshot.getDownloadUrl() + "");
-                    updatePhotoUrl(taskSnapshot.getDownloadUrl());
-                }
-            });
+    @OnClick({R.id.btn_profile_settings, R.id.btn_sign_out})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_profile_settings:
+                getFragmentManager().beginTransaction().replace(R.id.profile_container, new ProfileSettingsFragment())
+                        .addToBackStack(null).commit();
+                break;
+            case R.id.btn_sign_out:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity(), AuthorizationActivity.class));
+                getActivity().finish();
+                break;
         }
-    }
-
-    private void updatePhotoUrl(Uri uri){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        User temp = new User(user.getUid(), user.getEmail(), uri.toString());
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("users").child(user.getUid()).setValue(temp);
-        Picasso.with(getContext()).load(temp.getPhotoUrl()).fit().centerCrop().into(ivProfile);
     }
 }
