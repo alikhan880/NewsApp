@@ -86,9 +86,6 @@ public class ProfileSettingsFragment extends Fragment {
                             etNameSettings.setText(user.getName());
                         }
 
-                        if(user.getAddress() != null && !user.getAddress().equals("")){
-                            etAddressSettings.setText(user.getAddress());
-                        }
 
                     }
 
@@ -145,8 +142,7 @@ public class ProfileSettingsFragment extends Fragment {
                 break;
             case R.id.btn_save_settings:
                 String name = etNameSettings.getText().toString().trim();
-                String address = etAddressSettings.getText().toString().trim();
-                User u = new User(user.getId(), user.getEmail(), user.getPhotoUrl(), name, address);
+                User u = new User(user.getId(), user.getEmail(), user.getPhotoUrl(), name);
                 FirebaseDatabase.getInstance().getReference("users")
                         .child(user.getId())
                         .setValue(u);

@@ -51,7 +51,6 @@ public class SearchPresenter {
                             Log.d("damerau", "value:" + damerau.distance(aWordsFrom, aWordsTo));
                             if (damerau.distance(aWordsFrom, aWordsTo) < 3) {
                                 Log.d("distances", aWordsFrom + " : " + aWordsTo);
-                                post.setDistance((int)damerau.distance(aWordsFrom, aWordsTo));
                                 posts.add(post);
                                 check = true;
                                 break;
@@ -59,18 +58,6 @@ public class SearchPresenter {
                         }
                         if(check) break;
                     }
-                }
-                Collections.sort(posts, new Comparator<Post>() {
-                    @Override
-                    public int compare(Post o1, Post o2) {
-                        if(o1.getDistance() < o2.getDistance()) return -1;
-                        else if (o1.getDistance() == o2.getDistance()) return 0;
-                        else return 1;
-                    }
-                });
-
-                for(int i = 0; i < posts.size(); i++){
-                    Log.d("distances", posts.get(i).getDistance() + "");
                 }
                 view.notifyAdapter();
 

@@ -9,10 +9,13 @@ public class Comment {
     private User user;
     private String postId;
     private String message;
-    private long timestamp;
+    private String timestamp;
 
 
-    public Comment(String id, User user, String postId, String message, long timestamp) {
+    public Comment() {
+    }
+
+    public Comment(String id, User user, String postId, String message, String timestamp) {
         this.id = id;
         this.user = user;
         this.postId = postId;
@@ -52,22 +55,36 @@ public class Comment {
         this.message = message;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
-    public Comment() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
 
+        Comment comment = (Comment) o;
+
+        if (id != null ? !id.equals(comment.id) : comment.id != null) return false;
+        if (user != null ? !user.equals(comment.user) : comment.user != null) return false;
+        if (postId != null ? !postId.equals(comment.postId) : comment.postId != null) return false;
+        if (message != null ? !message.equals(comment.message) : comment.message != null)
+            return false;
+        return timestamp != null ? timestamp.equals(comment.timestamp) : comment.timestamp == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(obj == null || this.getClass() != obj.getClass()) return false;
-        if(this == obj) return true;
-        return this.getId().equals(((Comment)obj).getId());
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (postId != null ? postId.hashCode() : 0);
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
+        return result;
     }
 }

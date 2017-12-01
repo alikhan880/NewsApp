@@ -81,12 +81,6 @@ public class ProfileFragment extends Fragment {
                         else{
                             tvNameProfile.setText("Set your name in settings");
                         }
-                        if(user.getAddress() != null && !user.getAddress().equals("")){
-                            tvLocationProfile.setText(user.getAddress());
-                        }
-                        else{
-                            tvLocationProfile.setText("Set location in settings");
-                        }
 
                         tvEmailProfile.setText(user.getEmail());
 

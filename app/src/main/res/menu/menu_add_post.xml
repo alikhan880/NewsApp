@@ -5,5 +5,6 @@
         android:icon="@drawable/ic_send"
         android:title="Create Post"
         android:id="@+id/menu_send"
+        android:visible="false"
         app:showAsAction="always" />
 </menu>

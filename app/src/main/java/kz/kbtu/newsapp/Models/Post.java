@@ -2,36 +2,52 @@ package kz.kbtu.newsapp.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.google.firebase.database.Exclude;
-
-import java.util.HashMap;
-import java.util.Map;
+import android.support.annotation.NonNull;
 
 /**
  * Created by abakh on 29-Sep-17.
  */
-public class Post implements Parcelable {
+public class Post implements Parcelable, Comparable<Post> {
     private String id;
     private String title;
     private String message;
-    private String userId;
-    private long timestamp;
-    private int cnt;
-    private int distance;
+    private String author;
+    private String date;
+    private String imageURL;
 
     public Post() {
     }
 
-    public Post(String id, String title, String message, String userId, long timestamp, int cnt, int distance) {
+    public Post(String id, String title, String message, String userId, String date, String imageUrl) {
         this.id = id;
         this.title = title;
         this.message = message;
-        this.userId = userId;
-        this.timestamp = timestamp;
-        this.cnt = cnt;
-        this.distance = distance;
+        this.author = userId;
+        this.date = date;
+        this.imageURL = imageUrl;
     }
+
+
+    protected Post(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        message = in.readString();
+        author = in.readString();
+        date = in.readString();
+        imageURL = in.readString();
+    }
+
+    public static final Creator<Post> CREATOR = new Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -57,80 +73,28 @@ public class Post implements Parcelable {
         this.message = message;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getDate() {
+        return date;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public int getCnt() {
-        return cnt;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setCnt(int cnt) {
-        this.cnt = cnt;
-    }
-
-    public int getDistance() {
-        return distance;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    protected Post(Parcel in) {
-        id = in.readString();
-        title = in.readString();
-        message = in.readString();
-        userId = in.readString();
-        timestamp = in.readLong();
-        cnt = in.readInt();
-        distance = in.readInt();
-    }
-
-    public static final Creator<Post> CREATOR = new Creator<Post>() {
-        @Override
-        public Post createFromParcel(Parcel in) {
-            return new Post(in);
-        }
-
-        @Override
-        public Post[] newArray(int size) {
-            return new Post[size];
-        }
-    };
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == null || this.getClass() != obj.getClass()) return false;
-        if(this == obj) return true;
-        return this.getId().equals(((Post)obj).getId());
-    }
-
-
-
-    @Exclude
-    public Map<String, Object> toMap(){
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("id", id);
-        result.put("title", title);
-        result.put("message", message);
-        result.put("userId", userId);
-        result.put("timestamp", timestamp);
-        result.put("cnt", cnt);
-        result.put("distance", distance);
-        return result;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     @Override
@@ -143,10 +107,41 @@ public class Post implements Parcelable {
         dest.writeString(id);
         dest.writeString(title);
         dest.writeString(message);
-        dest.writeString(userId);
-        dest.writeLong(timestamp);
-        dest.writeInt(cnt);
-        dest.writeInt(distance);
+        dest.writeString(author);
+        dest.writeString(date);
+        dest.writeString(imageURL);
+    }
+
+    @Override
+    public int compareTo(@NonNull Post o) {
+        return 0;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Post)) return false;
+
+        Post post = (Post) o;
+
+        if (id != null ? !id.equals(post.id) : post.id != null) return false;
+        if (title != null ? !title.equals(post.title) : post.title != null) return false;
+        if (message != null ? !message.equals(post.message) : post.message != null) return false;
+        if (author != null ? !author.equals(post.author) : post.author != null) return false;
+        if (date != null ? !date.equals(post.date) : post.date != null) return false;
+        return imageURL != null ? imageURL.equals(post.imageURL) : post.imageURL == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (imageURL != null ? imageURL.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -155,10 +150,9 @@ public class Post implements Parcelable {
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", message='" + message + '\'' +
-                ", userId='" + userId + '\'' +
-                ", timestamp=" + timestamp +
-                ", cnt=" + cnt +
-                ", distance=" + distance +
+                ", author='" + author + '\'' +
+                ", date='" + date + '\'' +
+                ", imageURL='" + imageURL + '\'' +
                 '}';
     }
 }

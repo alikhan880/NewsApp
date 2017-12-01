@@ -52,7 +52,18 @@ public class RegistrationFragment extends Fragment implements AuthorizationView 
         View view = inflater.inflate(R.layout.fragment_registration, container, false);
         unbinder = ButterKnife.bind(this, view);
         presenter = new AuthorizationPresenter(this);
+
+        Bundle bundle = getArguments();
+        if(bundle != null) placeInfo(bundle);
+        
         return view;
+    }
+
+    private void placeInfo(Bundle b) {
+        String email = b.getString("email");
+        String password = b.getString("password");
+        etEmailLogin.setText(email);
+        etPasswordLogin.setText(password);
     }
 
     @Override

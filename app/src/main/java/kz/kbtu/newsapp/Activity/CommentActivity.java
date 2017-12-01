@@ -20,8 +20,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -139,12 +142,16 @@ public class CommentActivity extends AppCompatActivity implements MainView {
         ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                long dateMs = Calendar.getInstance().getTimeInMillis();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
+                Date date = new Date(dateMs);
                 User user = dataSnapshot.getValue(User.class);
+                String time = formatter.format(date);
                 Comment comment = new Comment(null,
                         user,
                         post.getId(),
                         message,
-                        Calendar.getInstance().getTimeInMillis());
+                        time);
                 presenter.createComment(comment);
                 etTextComments.setText("");
             }

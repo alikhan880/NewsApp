@@ -40,6 +40,8 @@ public class LoginFragment extends Fragment implements AuthorizationView {
     ProgressBar progressDialog;
     @BindView(R.id.tv_register_login)
     TextView tvRegisterLogin;
+    @BindView(R.id.tv_forgot_password)
+    TextView tvForgotPassword;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -62,7 +64,7 @@ public class LoginFragment extends Fragment implements AuthorizationView {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.btn_enter_login, R.id.tv_register_login})
+    @OnClick({R.id.btn_enter_login, R.id.tv_register_login, R.id.tv_forgot_password})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_enter_login:
@@ -73,14 +75,25 @@ public class LoginFragment extends Fragment implements AuthorizationView {
             case R.id.tv_register_login:
                 registerClicked();
                 break;
+
+            case R.id.tv_forgot_password:
+
+                break;
         }
     }
 
     private void registerClicked() {
+        String email = etEmailLogin.getText().toString().trim();
+        String password = etPasswordLogin.getText().toString().trim();
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        bundle.putString("password", password);
+        RegistrationFragment f = new RegistrationFragment();
+        f.setArguments(bundle);
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                .replace(R.id.container_authorization, new RegistrationFragment())
+                .replace(R.id.container_authorization, f)
                 .addToBackStack(null).commit();
     }
 

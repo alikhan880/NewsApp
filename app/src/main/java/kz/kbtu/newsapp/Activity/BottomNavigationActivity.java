@@ -1,13 +1,16 @@
 package kz.kbtu.newsapp.Activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.BindView;
@@ -29,6 +32,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     AddEventContainer addEventContainer;
     FavoritesContainer favoritesContainer;
     ProfileContainer profileContainer;
+    MenuItem item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +40,11 @@ public class BottomNavigationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bottom_navigation);
         fm = getSupportFragmentManager();
         ButterKnife.bind(this);
-        initContainers();
-        addListener();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        initContainers();
+        addListener();
+        requestPermission();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
@@ -124,6 +129,20 @@ public class BottomNavigationActivity extends AppCompatActivity {
         bottomNavigation.setSelectedItemId(R.id.menu_catalog);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add_post, menu);
+        item = menu.findItem(R.id.menu_send);
+        return true;
+    }
+
+
+    private void requestPermission(){
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.ACCESS_NETWORK_STATE}, 10);
+    }
 
     @SuppressLint("RestrictedApi")
     @Override

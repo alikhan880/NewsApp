@@ -18,7 +18,6 @@ public class AddEventContainer extends Fragment {
 
     AddEventFragment fragment;
     FragmentManager fm;
-
     public AddEventContainer() {
         // Required empty public constructor
     }
@@ -31,6 +30,9 @@ public class AddEventContainer extends Fragment {
         initFragments();
         return inflater.inflate(R.layout.fragment_add_event_container, container, false);
     }
+
+
+
 
     private void initFragments() {
         fm = getChildFragmentManager();

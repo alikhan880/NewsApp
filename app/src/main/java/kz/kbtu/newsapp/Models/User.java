@@ -9,22 +9,20 @@ public class User {
     private String email;
     private String photoUrl;
     private String name;
-    private String address;
 
     public User() {
 
     }
 
-    public User(String id, String email, String photoUrl, String name, String address) {
+    public User(String id, String email, String photoUrl, String name) {
         this.id = id;
         this.email = email;
         this.photoUrl = photoUrl;
         this.name = name;
-        this.address = address;
     }
 
     public User(String id, String email, String photoUrl) {
-        this(id, email, photoUrl, "", "");
+        this(id, email, photoUrl, "");
     }
 
     public String getId() {
@@ -59,11 +57,4 @@ public class User {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }
