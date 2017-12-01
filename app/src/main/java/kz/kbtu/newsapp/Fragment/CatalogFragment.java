@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,14 +108,32 @@ public class CatalogFragment extends Fragment implements MainView, RecyclerMainA
 
     @Override
     public void likeClicked(int position) {
-        Post post = messagesList.get(position);
-        String key = FirebaseDatabase.getInstance()
-                .getReference("favorites")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().getKey();
-        FirebaseDatabase.getInstance().getReference("favorites")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(key)
-                .setValue(post);
+        final Post p = messagesList.get(position);
+        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference().child("favorites")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.child(uid).exists()){
+                            if(dataSnapshot.child(uid).child(p.getId()).exists()){
+                                dataSnapshot.getRef().child(uid).child(p.getId()).setValue(null);
+                            }
+                            else{
+                                dataSnapshot.getRef().child(uid).child(p.getId()).setValue(p);
+                            }
+                        }
+                        else{
+                            DatabaseReference ref = dataSnapshot.getRef();
+                            ref.child(uid).child(p.getId()).setValue(p);
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     @Override
@@ -146,6 +165,7 @@ public class CatalogFragment extends Fragment implements MainView, RecyclerMainA
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Post post = dataSnapshot.getValue(Post.class);
                 messagesList.remove(post);
+                Collections.sort(messagesList);
                 adapter.notifyDataSetChanged();
             }
 

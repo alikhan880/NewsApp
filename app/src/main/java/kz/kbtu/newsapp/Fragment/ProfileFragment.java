@@ -37,8 +37,6 @@ public class ProfileFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.tv_name_profile)
     TextView tvNameProfile;
-    @BindView(R.id.tv_location_profile)
-    TextView tvLocationProfile;
     @BindView(R.id.tv_email_profile)
     TextView tvEmailProfile;
     @BindView(R.id.btn_profile_settings)

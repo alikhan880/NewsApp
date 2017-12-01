@@ -15,28 +15,28 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import kz.kbtu.newsapp.Fragment.CatalogFragment;
+import kz.kbtu.newsapp.Fragment.FavoritesFragment;
 import kz.kbtu.newsapp.Models.Post;
 import kz.kbtu.newsapp.R;
 
 /**
- * Created by abakh on 28-Sep-17.
+ * Created by abakh on 02-Dec-17.
  */
 
-public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapter.ViewHolder> {
-    ArrayList<Post> list;
-    ArrayList<Post> favorite;
-    private RecyclerMainListener listener;
-    public RecyclerMainAdapter(ArrayList<Post> list, RecyclerMainListener listener, ArrayList<Post> favorite) {
-        this.list = list;
-        this.listener = listener;
-        this.favorite = favorite;
+public class RecyclerFavoritesAdapter extends RecyclerView.Adapter<RecyclerFavoritesAdapter.ViewHolder> {
+
+    private ArrayList<Post> list;
+    private FavoritesAdapterListener listener;
+
+    public interface FavoritesAdapterListener {
+        void itemClicked(int position);
+
+        void likeClicked(int position);
     }
 
-    public interface RecyclerMainListener{
-        void itemClicked(int position);
-        void likeClicked(int position);
-        void notifyAdapter();
+    public RecyclerFavoritesAdapter(ArrayList<Post> list, FavoritesAdapterListener listener) {
+        this.list = list;
+        this.listener = listener;
     }
 
     @Override
@@ -45,28 +45,22 @@ public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapte
         return new ViewHolder(v);
     }
 
+
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.message.setText(list.get(position).getMessage());
         holder.title.setText(list.get(position).getTitle());
         holder.tvDate.setText(list.get(position).getDate());
-        Log.d("onBind", list.get(position).toString());
-        if(list.get(position).getImageURL() != null && !list.get(position).getImageURL().equals("")){
+        if (list.get(position).getImageURL() != null && !list.get(position).getImageURL().equals("")) {
             Log.d("onBind", list.get(position).getImageURL());
-            Picasso.with(((CatalogFragment)listener).getContext()).load(list.get(position).getImageURL())
+            Picasso.with(((FavoritesFragment) listener).getContext()).load(list.get(position).getImageURL())
                     .fit().centerCrop().memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(holder.ivPost);
             holder.ivPost.setVisibility(View.VISIBLE);
-        }
-        else{
-            Picasso.with(((CatalogFragment)listener).getContext()).cancelRequest(holder.ivPost);
+        } else {
+            Picasso.with(((FavoritesFragment) listener).getContext()).cancelRequest(holder.ivPost);
             holder.ivPost.setVisibility(View.GONE);
         }
-        if(favorite.contains(list.get(position))){
-            holder.btnLike.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_heart, 0);
-        }
-        else{
-            holder.btnLike.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_heart_without_color, 0);
-        }
+        holder.btnLike.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_heart, 0);
     }
 
     @Override
@@ -80,13 +74,14 @@ public class RecyclerMainAdapter extends RecyclerView.Adapter<RecyclerMainAdapte
         Button btnLike;
         ImageView ivPost;
         TextView tvDate;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            title = (TextView)itemView.findViewById(R.id.item_title_recycler_main);
+            title = (TextView) itemView.findViewById(R.id.item_title_recycler_main);
             message = (TextView) itemView.findViewById(R.id.item_text_recycler_main);
-            btnLike = (Button)itemView.findViewById(R.id.item_btn_like);
+            btnLike = (Button) itemView.findViewById(R.id.item_btn_like);
             ivPost = (ImageView) itemView.findViewById(R.id.iv_item_recycler_main);
-            tvDate = (TextView)itemView.findViewById(R.id.tv_date_item_recycler_main);
+            tvDate = (TextView) itemView.findViewById(R.id.tv_date_item_recycler_main);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -49,8 +49,6 @@ public class ProfileSettingsFragment extends Fragment {
     TextView tvChangePhoto;
     @BindView(R.id.et_name_settings)
     EditText etNameSettings;
-    @BindView(R.id.et_address_settings)
-    EditText etAddressSettings;
     @BindView(R.id.btn_save_settings)
     Button btnSaveSettings;
     Unbinder unbinder;

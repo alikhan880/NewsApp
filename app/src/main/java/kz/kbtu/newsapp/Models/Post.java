@@ -114,7 +114,7 @@ public class Post implements Parcelable, Comparable<Post> {
 
     @Override
     public int compareTo(@NonNull Post o) {
-        return 0;
+        return o.getDate().compareTo(this.getDate());
     }
 
 

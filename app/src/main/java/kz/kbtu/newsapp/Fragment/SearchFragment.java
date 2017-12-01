@@ -1,6 +1,7 @@
 package kz.kbtu.newsapp.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,14 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.Collections;
 import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import kz.kbtu.newsapp.Activity.DetailActivity;
 import kz.kbtu.newsapp.Adapter.RecyclerSearchAdapter;
 import kz.kbtu.newsapp.Models.Post;
 import kz.kbtu.newsapp.R;
@@ -42,6 +50,7 @@ public class SearchFragment extends Fragment implements SearchView, RecyclerSear
     String searchText;
     SearchPresenter presenter;
     Vector<Post> posts;
+    Vector<Post> favorites;
     FirebaseDatabase db;
     RecyclerSearchAdapter adapter;
     public SearchFragment() {
@@ -56,9 +65,10 @@ public class SearchFragment extends Fragment implements SearchView, RecyclerSear
         rootView = inflater.inflate(R.layout.fragment_search, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         posts = new Vector<>();
+        favorites = new Vector<>();
         db = FirebaseDatabase.getInstance();
-        presenter = new SearchPresenter(this, db, posts);
-        adapter = new RecyclerSearchAdapter(this, posts);
+        presenter = new SearchPresenter(this, db, posts, favorites);
+        adapter = new RecyclerSearchAdapter(this, posts, favorites);
         recyclerViewSearch.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewSearch.setAdapter(adapter);
         return rootView;
@@ -102,6 +112,47 @@ public class SearchFragment extends Fragment implements SearchView, RecyclerSear
 
     @Override
     public void itemClicked(int position) {
+        Post post = posts.get(position);
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra("post", post);
+        startActivity(intent);
+    }
 
+    @Override
+    public void likeClicked(int position) {
+        final Post p = posts.get(position);
+        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference().child("favorites")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.child(uid).exists()){
+                            if(dataSnapshot.child(uid).child(p.getId()).exists()){
+                                dataSnapshot.getRef().child(uid).child(p.getId()).setValue(null);
+                                favorites.remove(p);
+                                adapter.notifyDataSetChanged();
+                            }
+                            else{
+                                dataSnapshot.getRef().child(uid).child(p.getId()).setValue(p);
+                                favorites.add(p);
+                                Collections.sort(favorites);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                        else{
+                            DatabaseReference ref = dataSnapshot.getRef();
+                            ref.child(uid).child(p.getId()).setValue(p);
+                            favorites.add(p);
+                            Collections.sort(favorites);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

@@ -1,14 +1,12 @@
 package kz.kbtu.newsapp.Adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import kz.kbtu.newsapp.Models.Comment;
 import kz.kbtu.newsapp.R;
@@ -34,7 +32,7 @@ public class RecyclerCommentsAdapter extends RecyclerView.Adapter<RecyclerCommen
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.message.setText(comments.get(position).getMessage());
         holder.author.setText(comments.get(position).getUser().getEmail());
-        holder.timeStamp.setText(DateFormat.format("dd/MM/yyyy", new Date(comments.get(position).getTimestamp())));
+        holder.timeStamp.setText(comments.get(position).getTimestamp());
     }
 
     @Override
