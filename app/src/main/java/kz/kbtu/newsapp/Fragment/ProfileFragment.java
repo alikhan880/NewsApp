@@ -65,8 +65,8 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
-                        if(user.getPhotoUrl() != null && !user.getPhotoUrl().equals("")){
-                            Picasso.with(getContext()).load(user.getPhotoUrl())
+                        if(user.getImageURL() != null && !user.getImageURL().equals("")){
+                            Picasso.with(getContext()).load(user.getImageURL())
                                     .fit().centerCrop().into(ivProfile);
                         }
                         else{

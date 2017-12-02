@@ -72,8 +72,8 @@ public class ProfileSettingsFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         user = dataSnapshot.getValue(User.class);
-                        if(user.getPhotoUrl() != null && !user.getPhotoUrl().equals("")){
-                            Picasso.with(getContext()).load(user.getPhotoUrl())
+                        if(user.getImageURL() != null && !user.getImageURL().equals("")){
+                            Picasso.with(getContext()).load(user.getImageURL())
                                     .fit().centerCrop().into(ivProfileSettings);
                         }
                         else{
@@ -120,8 +120,8 @@ public class ProfileSettingsFragment extends Fragment {
         User temp = new User(userF.getUid(), user.getEmail(), uri.toString());
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("users").child(userF.getUid()).setValue(temp);
-        Picasso.with(getContext()).load(temp.getPhotoUrl()).fit().centerCrop().into(ivProfileSettings);
-        user.setPhotoUrl(temp.getPhotoUrl());
+        Picasso.with(getContext()).load(temp.getImageURL()).fit().centerCrop().into(ivProfileSettings);
+        user.setImageURL(temp.getImageURL());
     }
 
     @Override
@@ -140,7 +140,7 @@ public class ProfileSettingsFragment extends Fragment {
                 break;
             case R.id.btn_save_settings:
                 String name = etNameSettings.getText().toString().trim();
-                User u = new User(user.getId(), user.getEmail(), user.getPhotoUrl(), name);
+                User u = new User(user.getId(), user.getEmail(), user.getImageURL(), name);
                 FirebaseDatabase.getInstance().getReference("users")
                         .child(user.getId())
                         .setValue(u);

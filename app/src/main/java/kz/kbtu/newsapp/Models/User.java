@@ -7,7 +7,7 @@ package kz.kbtu.newsapp.Models;
 public class User {
     private String id;
     private String email;
-    private String photoUrl;
+    private String imageURL;
     private String name;
 
     public User() {
@@ -17,7 +17,7 @@ public class User {
     public User(String id, String email, String photoUrl, String name) {
         this.id = id;
         this.email = email;
-        this.photoUrl = photoUrl;
+        this.imageURL = photoUrl;
         this.name = name;
     }
 
@@ -41,12 +41,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getName() {
